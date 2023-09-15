@@ -1,25 +1,19 @@
 extern crate wasm_bindgen;
-mod structs;
-
-use structs::{MyObject, MyObject2, Tag, Total};
 use wasm_bindgen::prelude::*;
-use wasm_bindgen::JsValue;
+use std::f64::consts::PI;
 
 #[wasm_bindgen]
-impl MyObject {
-    #[wasm_bindgen(constructor)]
-    pub fn new(val: Vec<JsValue>) -> MyObject {
+pub fn wasm_func(lat1: f64, lon1: f64, lat2: f64, lon2: f64) -> f64 {
+    const R: f64 = 6371.0;
+    let d_lat = deg2rad(lat2 - lat1);
+    let d_lon = deg2rad(lon2 - lon1);
+    let a = f64::sin(d_lat / 2.0) * f64::sin(d_lat / 2.0) + f64::cos(deg2rad(lat1)) * f64::cos(deg2rad(lat2)) * f64::sin(d_lon / 2.0) * f64::sin(d_lon / 2.0);
+    let c = 2.0 * f64::atan2(f64::sqrt(a), f64::sqrt(1.0 - a));
+    let distance = R * c;
 
-      let mut array: MyObject = MyObject(vec![]);
+    return distance * 1000.0;
+}
 
-      for item in val.iter() {
-        let x: Total  = serde_wasm_bindgen::from_value(item.clone()).unwrap();
-          array.0.push(x);
-      }
-      array
-    }
-
-    pub fn get(self) -> JsValue {
-      serde_wasm_bindgen::to_value(&self).unwrap()
-    }
+fn deg2rad(deg: f64) -> f64 {
+    deg * (PI / 180.0)
 }
