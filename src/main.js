@@ -1,26 +1,19 @@
 const { MyObject } = require('../pkg')
-const fibonacciJs = require('./fibonacci')
+const js_loop = require('./js_func')
+const data = require('./data.json')
 
 const run = async () => {
-  const total = 
-    [{
-      "id": 1,
-      "name": "Leanne Graham",
-      "username": "Bret",
-      "email": "testes@dsa"
-    }]
   
-  const foo =  new MyObject(total);
+  const foo =  new MyObject(data);
   console.log('Starting!');
 
   console.time('wasm-time');
-
-  console.log(foo.get());
+foo.get();
   console.timeEnd('wasm-time');
 
-  // console.time('js-time');
-  // console.log(fibonacciJs(total));
-  // console.timeEnd('js-time');
+  console.time('js-time');
+ js_loop(data);
+  console.timeEnd('js-time');
 }
 
 run()
