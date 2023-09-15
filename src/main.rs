@@ -1,12 +1,12 @@
 use std::time::{Instant};
 
 mod lib;
-use lib::fibonacci;
+use lib::;
 
 fn main() {
-  let start = Instant::now();
-  println!("{}", fibonacci(45));
-  let duration = start.elapsed();
+  // let start = Instant::now();
+  // println!("{}", fibonacci(45));
+  // let duration = start.elapsed();
 
-  println!("{:?}", duration);
+  // println!("{:?}", duration);
 }
